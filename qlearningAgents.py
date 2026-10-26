@@ -101,10 +101,14 @@ class QLearningAgent(ReinforcementAgent):
           HINT: To pick randomly from a list, use random.choice(list)
         """
         # Pick Action
-        legalActions = self.getLegalActions(state)
+        legal_actions = self.getLegalActions(state)
         action = None
-        util.raiseNotDefined()
-
+        if not legal_actions: 
+          action = None
+        if util.flipCoin(self.epsilon): 
+          action = random.choice(legal_actions)
+        else: 
+          action = self.computeActionFromQValues(state)
         return action
 
     def update(self, state, action, nextState, reward):
